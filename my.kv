@@ -1,0 +1,128 @@
+#fichier externe de l'application
+WindowManager:
+    MainWindow:
+    SecondWindow:
+    ThirdWindow:
+    Error:
+    CameraPhone:
+    MyScreen:
+<MainWindow>:
+    name: "main"
+    canvas:
+        Color:
+            rgb: 1,1,1
+        Rectangle:
+            source: 'machine.jpg'
+            size: self.size
+    BoxLayout:
+        padding: 10
+        spacing: 10
+        size_hint:1,None
+        pos_hint:{'top':1}
+        height: 100
+        Image:
+            size_hint:None , None
+            size: 80 ,80
+            source:'lenna.png'
+            size_hint:None , None
+            size: 80 ,80
+            source:'machine.jpg'
+    GridLayout:
+        cols:1
+        GridLayout:
+            rows:4
+            Image:
+                source:'machine.jpg' 
+            Label: 
+                text: 'description d un atelier '
+                font_size: 33
+            Label:
+                text:'please enter your password'
+                size_hint:(0.1,0.3)
+            TextInput:
+                id: passw
+                text:''
+                multiline: False
+                password: True
+                size_hint:(0.1,0.3)
+        Button:
+            text: 'LOGIN'
+            size_hint:(0.1,0.1)
+            on_release:
+                app.root.current= "second" if passw.text=="imad" else "error"
+                root.manager.transition.direction = "up"
+<SecondWindow>:
+    name: "second"
+    GridLayout:
+        cols:1
+        GridLayout:
+            rows:1
+            GridLayout:
+                cols:2
+                Button:
+                    text:"use camera"
+                    size_hint:(0.1,0.1) 
+                    on_release:
+                        app.root.current = "cameraphone"
+                        root.manager.transition.direction = "up"
+                Button:
+                    text:"use galerie"
+                    size_hint:(0.1,0.1) 
+                    on_release:
+                        app.root.current= "Third" 
+                        root.manager.transition.direction = "up" 
+        Button:
+            text: "back"
+            size_hint:(0.1,0.1)
+            on_release:
+                app.root.current= "main" 
+                root.manager.transition.direction = "down"
+<ThirdWindow>:
+    name: "Third"
+    GridLayout:
+        cols:1
+        GridLayout:
+            rows:2
+            Button:
+                text:"use puctre"
+                size_hint:(0.1,0.1)
+            Button:
+                text:"use video"
+                size_hint:(0.1,0.1)
+        Button:
+            text: "back"
+            size_hint:(0.1,0.1)
+            on_release:
+                app.root.current= "second" 
+                root.manager.transition.direction = "down"
+
+            
+<Error>
+    name:"error"
+    GridLayout:
+        cols:1
+        rows:3
+        Image:
+            source:'error.jpg'
+        Label:
+            text:'your password is incorrecte please try again'
+        Button:
+            text:'try again'
+            size_hint:(0.1,0.1)
+            on_release:
+                app.root.current="main"
+
+<CameraPhone>:
+    name: "cameraphone"
+    GridLayout:
+        cols: 1
+        rows: 2
+        Camera:
+            play: True
+            index: 0
+        Button:
+            text: "back"
+            size_hint: (0.1, 0.1)
+            on_release:
+                app.root.current = "second"
+                root.manager.transition.direction = "down"
